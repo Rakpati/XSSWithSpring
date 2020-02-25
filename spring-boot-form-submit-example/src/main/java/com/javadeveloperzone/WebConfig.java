@@ -14,7 +14,7 @@ public class WebConfig {
    public FilterRegistrationBean abcFilter() {
 	   FilterRegistrationBean filterRegBean = new FilterRegistrationBean();
 	   filterRegBean.setFilter(new MyFilter());
-	   filterRegBean.addUrlPatterns("/saveDetails");
+	   filterRegBean.addUrlPatterns("/*");
 	   return filterRegBean;
    }
 }

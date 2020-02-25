@@ -16,7 +16,7 @@
 <h4> ${employeeName} </h4>
 
 <form method="post" action="secondPage">
-    Enter Employee Name : <input type="text" name="employeeName" value = "${employeeName}"/>
+    Enter Employee Name : <input type="text" name="employeeName" value = " ${employeeName} ">
     <br>
     Enter Employee Email Address1: <input type="text" name="employeeEmail1" value = "${employeeEmail1}">
     Enter Employee Email Address2: <input type="text" name="employeeEmail2" value = "${employeeEmail2}">
