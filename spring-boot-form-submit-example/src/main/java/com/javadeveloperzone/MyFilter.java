@@ -9,6 +9,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -29,6 +31,14 @@ public class MyFilter implements Filter {
 		String url = request instanceof HttpServletRequest ?
 				((HttpServletRequest) request).getRequestURL().toString() : "N/A";
 				System.out.println("from filter, processing url: " + url);
+				
+				HttpServletResponse res = (HttpServletResponse) response;
+		        res.setHeader("Access-Control-Allow-Origin", "*");
+		        res.setHeader("Access-Control-Allow-Credentials", "true");
+				res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
+				res.setHeader("Access-Control-Max-Age", "3600");
+		        res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Authorization, Origin, Accept, Access-Control-Request-Method, Access-Control-Request-Headers");
+				
 				HttpServletRequest req = (HttpServletRequest) request;
 				Enumeration<String> params = req.getParameterNames();
 				Map<String, Object> modelMap = new HashMap<>();

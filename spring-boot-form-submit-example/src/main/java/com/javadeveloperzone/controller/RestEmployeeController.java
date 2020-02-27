@@ -14,9 +14,14 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,6 +39,9 @@ public class RestEmployeeController
 	@Autowired
 	private StudentForm studentDao;
 
+    @Autowired
+    private UserService userService;
+	
 	@RequestMapping("/")
 	public String healthCheck() {
 		return "OK";
@@ -50,6 +58,33 @@ public class RestEmployeeController
 		studentDao.setName(p.getName());
 		return studentDao;
 	}
+	
+	 @PostMapping("/all")
+	    public ApiResponse<User> saveUser(@RequestBody UserDto user){
+	        return new ApiResponse<>(HttpStatus.OK.value(), "User saved successfully.",userService.save(user));
+	    }
+
+	    @GetMapping("/all")
+	    public ApiResponse<List<User>> listUser(){
+	        return new ApiResponse<>(HttpStatus.OK.value(), "User list fetched successfully.",userService.findAll());
+	    }
+
+	    @GetMapping("/all/{id}")
+	    public ApiResponse<User> getOne(@PathVariable int id){
+	        return new ApiResponse<>(HttpStatus.OK.value(), "User fetched successfully.",userService.findById(id));
+	    }
+
+	    @PutMapping("/all/{id}")
+	    public ApiResponse<UserDto> update(@RequestBody UserDto userDto) {
+	        return new ApiResponse<>(HttpStatus.OK.value(), "User updated successfully.",userService.update(userDto));
+	    }
+
+	    @DeleteMapping("/all/{id}")
+	    public ApiResponse<Void> delete(@PathVariable int id) {
+	        userService.delete(id);
+	        return new ApiResponse<>(HttpStatus.OK.value(), "User deleted successfully.", null);
+	    }
+	
 	@RequestMapping(value = "/thirdPage")
 	public ModelMap thirdPage(@RequestParam(name="name", required=false, defaultValue="Unknown") String name, 
 			@RequestParam(name="address", required=false, defaultValue="Unknown") String address,
