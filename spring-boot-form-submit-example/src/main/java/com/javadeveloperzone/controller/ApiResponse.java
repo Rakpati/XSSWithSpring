@@ -5,6 +5,7 @@ public class ApiResponse<T> {
     private int status;
     private String message;
     private Object result;
+    private String comment;
 
     public ApiResponse(int status, String message, Object result) {
         this.status = status;
